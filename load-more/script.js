@@ -7,6 +7,7 @@ let load = document.querySelector(".load");
 
 let dataArr = [];
 let copyArr = [];
+let sortedArr = [];
 let sorted = [];
 
 let max = 4;
@@ -35,7 +36,7 @@ function createCard(arr) {
 async function getData() {
   let res = await axios(BASE_URL);
   dataArr = res.data;
-  copyArr = search.value ? copyArr : res.data;
+  copyArr = search.value || copyArr.length ? copyArr : res.data;
   createCard(sliceArr(copyArr));
 }
 getData();
@@ -53,17 +54,16 @@ sortBtn.addEventListener("click", async function () {
   sortStatus = true;
   if (sortBtn.innerHTML == "Sort") {
     sortBtn.innerHTML = "Ascending";
-    copyArr = copyArr.toSorted((a, b) => a.unitPrice - b.unitPrice);
+    sortedArr = copyArr.toSorted((a, b) => a.unitPrice - b.unitPrice);
   } else if (sortBtn.innerHTML == "Ascending") {
     sortBtn.innerHTML = "Descending";
-    copyArr = copyArr.toSorted((a, b) => b.unitPrice - a.unitPrice);
+    sortedArr = copyArr.toSorted((a, b) => b.unitPrice - a.unitPrice);
   } else {
     sortBtn.innerHTML = "Sort";
-    copyArr = dataArr;
-    sortStatus = false;
+    sortedArr = copyArr;
   }
   sorted = copyArr;
-  createCard(sliceArr(copyArr));
+  createCard(sliceArr(sortedArr));
 });
 
 function sliceArr(arr) {
