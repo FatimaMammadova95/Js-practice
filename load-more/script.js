@@ -41,7 +41,7 @@ async function getData() {
 getData();
 
 search.addEventListener("input", function (e) {
-  copyArr = dataArr;
+  copyArr = sortedArr.length ? sortedArr : dataArr;
   copyArr = copyArr.filter((item) =>
     item.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase())
   );
@@ -69,9 +69,16 @@ function sliceArr(arr) {
 }
 
 load.addEventListener("click", function () {
-  max = max + 4;
-  if (max >= dataArr.length) {
-    load.style.display = "none";
+  if (load.innerHTML == "Load More") {
+    max = max + 4;
+    if (max >= dataArr.length) {
+      load.innerHTML = "Load Less";
+    }
+  } else {
+    max = max - 4;
+    if (max <= 4) {
+      load.innerHTML = "Load More";
+    }
   }
   if (!sortStatus) {
     getData();
