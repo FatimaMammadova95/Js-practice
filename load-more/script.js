@@ -8,7 +8,6 @@ let load = document.querySelector(".load");
 let dataArr = [];
 let copyArr = [];
 let sortedArr = [];
-let sorted = [];
 
 let max = 4;
 let sortStatus = false;
@@ -62,7 +61,6 @@ sortBtn.addEventListener("click", async function () {
     sortBtn.innerHTML = "Sort";
     sortedArr = copyArr;
   }
-  sorted = copyArr;
   createCard(sliceArr(sortedArr));
 });
 
@@ -78,6 +76,6 @@ load.addEventListener("click", function () {
   if (!sortStatus) {
     getData();
   } else {
-    createCard(sliceArr(sorted));
+    createCard(sliceArr(sortedArr));
   }
 });
